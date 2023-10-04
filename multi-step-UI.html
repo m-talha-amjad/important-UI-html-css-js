@@ -1,0 +1,82 @@
+ <!-- chimkinuggie.com -->
+ <!-- Motion 8.3 -->
+<style>
+[aria-hidden="true"] {
+  display: none;
+}
+.cl-upload--wrapper {
+  display: none;
+}
+</style>
+<div class="product-block js-step" data-step="product-variants" aria-hidden="false"></div>
+<div class="cl-upload--wrapper">
+<div class="product-block js-step" data-step="upload-img" aria-hidden="true"></div>
+<div class="product-block js-step" data-step="product-upsells" aria-hidden="true"></div>
+
+<div class="product-block add-cart-wrap" aria-hidden="true"></div>
+
+<div class="step-buttons-wrap">
+    <button class="btn btn--tertiary btn-prev" type="button"  aria-hidden="true" aria-label="Previous">
+        ←
+    </button>
+    <button class="btn btn-next" type="button" aria-hidden="false" aria-label="Next">
+        Next →
+    </button>
+  </div>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const steps = document.querySelectorAll(".js-step");
+      const prevButton = document.querySelector(".btn-prev");
+      const nextButton = document.querySelector(".btn-next");
+      const cartBtnWrap = document.querySelector(".add-cart-wrap");
+      
+      let currentStep = 0;
+    
+      // Function to hide a step
+      function hideStep(stepIndex) {
+        steps[stepIndex].setAttribute("aria-hidden", "true");
+        const imgUpload = document.querySelector(".cl-upload--wrapper ");
+        imgUpload.style.display = "none";
+      }
+    
+      // Function to show a step
+      function showStep(stepIndex) {
+        steps[stepIndex].setAttribute("aria-hidden", "false");
+        if (stepIndex === 1 ) {
+          const imgUpload = document.querySelector(".cl-upload--wrapper ");
+          imgUpload.style.display = "block";
+        }
+      }
+    
+      // Function to handle the "Next" button click
+      function handleNextClick() {
+        hideStep(currentStep);
+        currentStep++;
+        showStep(currentStep);
+        prevButton.setAttribute("aria-hidden", "false");
+    
+        if (currentStep === steps.length - 1) {
+          nextButton.setAttribute("aria-hidden", "true");
+          cartBtnWrap.setAttribute("aria-hidden", "false");
+        }
+      }
+    
+      // Function to handle the "Previous" button click
+      function handlePrevClick() {
+        hideStep(currentStep);
+        currentStep--;
+        showStep(currentStep);
+        nextButton.setAttribute("aria-hidden", "false");
+        cartBtnWrap.setAttribute("aria-hidden", "true");
+        if (currentStep === 0) {
+          prevButton.setAttribute("aria-hidden", "true");
+        }
+      }
+    
+      // Initial setup
+      prevButton.setAttribute("aria-hidden", "true");
+      nextButton.addEventListener("click", handleNextClick);
+      prevButton.addEventListener("click", handlePrevClick);
+    });
+</script>
